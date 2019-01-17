@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MessagesService } from '../services/messages.service';
+import { MessagingService } from '../../services/messaging.service';
 import { MAT_SNACK_BAR_DATA } from '@angular/material';
-import { Message } from '../classes/message';
+import { Message } from '../../../../../classes/message';
 
 @Component({
   selector: 'wpp-messages',

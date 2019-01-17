@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { User } from '../classes/user';
-import { Observable, of, OperatorFunction, Subject, throwError } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
-import { MessagesService } from './messages.service';
-import { Message } from '../classes/message';
-import { errorClasses } from '../classes/error-classes';
+import { User } from '../../../../classes/user';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { MessagingService } from '../../messaging/services/messaging.service';
+import { Message } from '../../../../classes/message';
+import { errorClasses } from '../../../../classes/error-classes';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class UserService {
   private _currentUser: Subject<User | null>;
   baseUrl: string;
 
-  constructor(private http: HttpClient, private messageService: MessagesService) {
+  constructor(private http: HttpClient, private messagingService: MessagingService) {
     this._currentUser = new Subject();
     this.baseUrl = 'http://localhost:3000/api';
   }
@@ -83,7 +83,7 @@ export class UserService {
         `body was: ${error.error}`);
     }
     // return an observable with a user-facing error message
-    this.messageService.sendMessage(errMessage);
+    this.messagingService.sendMessage(errMessage);
     return throwError(error.error);
   };
 }

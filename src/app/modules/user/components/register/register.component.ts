@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Roles } from '../classes/role';
-import { UserService } from '../services/user.service';
-import { MessagesService } from '../services/messages.service';
-import { fieldMatchValidator } from '../../utilities/fieldMatchValidator';
-import { FieldMatchErrorStateMatcher } from '../../utilities/fieldMatchErrorStateMatcher';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Roles } from '../../../../../classes/role';
+import { UserService } from '../../services/user.service';
+import { MessagingService } from '../../../messaging/services/messaging.service';
+import { fieldMatchValidator } from '../../../../../utilities/fieldMatchValidator';
+import { FieldMatchErrorStateMatcher } from '../../../../../utilities/fieldMatchErrorStateMatcher';
 
 @Component({
   selector: 'wpp-register',
@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private messageService: MessagesService) {
+              private messageService: MessagingService) {
 
     this.hidePassword = true;
     this.hideConfirmPassword = true;

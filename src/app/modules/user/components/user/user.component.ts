@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, ValidatorFn, AbstractControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute, Params, Data } from '@angular/router';
-import { Roles } from '../classes/role';
-import { User } from '../classes/user';
-import { UserService } from '../services/user.service';
-import { MessagesService } from '../services/messages.service';
-import { Message } from '../classes/message';
-import { errorClasses } from '../classes/error-classes';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Roles } from '../../../../../classes/role';
+import { User } from '../../../../../classes/user';
+import { UserService } from '../../services/user.service';
+import { MessagingService } from '../../../messaging/services/messaging.service';
+import { Message } from '../../../../../classes/message';
+import { errorClasses } from '../../../../../classes/error-classes';
 
 @Component({
   selector: 'wpp-user',
@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
               private router: Router,
               private userService: UserService,
               private fb: FormBuilder,
-              private messageService: MessagesService) {
+              private messageService: MessagingService) {
     this.hidePassword = true;
     this.hideCnfPassword = true;
   }
@@ -66,13 +66,11 @@ export class UserComponent implements OnInit {
   }
 
   private save() {
-    console.log(this.userForm.value);
     if (this.phase === 'edit') {
       this.userService.editUser(this.userForm.value)
         .subscribe(result => {
             this.messageService.sendMessage(new Message('User saved', errorClasses.success, 1500));
             this.router.navigateByUrl('/users');
-            // console.log('result Edit:', result);
           },
           err => {
             // this.messageService.sendMessage('Message from app Component to message Component!');
@@ -87,7 +85,6 @@ export class UserComponent implements OnInit {
   }
 
   private mapUser = (user: User) => {
-    console.log(user);
     this.userForm.setValue({
       id: user.id,
       name: user.name,

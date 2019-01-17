@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { MainComponent } from './main/main.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { RegisterComponent } from './register/register.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { UserComponent } from './user/user.component';
-import { LogoutComponent } from './logout/logout.component';
+import { LoginComponent } from './modules/user/components/login/login.component';
+import { MainComponent } from './components/main/main.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RegisterComponent } from './modules/user/components/register/register.component';
+import { UserListComponent } from './modules/user/components/user-list/user-list.component';
+import { UserComponent } from './modules/user/components/user/user.component';
+import { LogoutComponent } from './modules/user/components/logout/logout.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },

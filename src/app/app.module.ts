@@ -4,35 +4,24 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WppRoutingModule } from './wpp-routing.module';
-import { AppComponent } from './app.component';
-import { MaterialModule } from './material/material.module';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { MainComponent } from './main/main.component';
-import { MenuComponent } from './menu/menu.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { UserComponent } from './user/user.component';
-import { MessagesComponent } from './messages/messages.component';
+import { AppComponent } from './components/app/app.component';
+import { MaterialModule } from './modules/material/material.module';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { MainComponent } from './components/main/main.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { MessagesComponent } from './modules/messaging/components/messages/messages.component';
 import { MAT_SNACK_BAR_DATA } from '@angular/material';
-import { CurrentUserComponent } from './current-user/current-user.component';
-import { UserService } from './services/user.service';
+import { UserService } from './modules/user/services/user.service';
 import { HeaderInterceptor } from './services/http-interceptor.service';
-import { LogoutComponent } from './logout/logout.component';
+import { UserModule } from './modules/user/user.module';
+import { MessagingModule } from './modules/messaging/messaging.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
-    RegisterComponent,
-    LoginComponent,
     MainComponent,
     MenuComponent,
-    UserListComponent,
-    UserComponent,
-    MessagesComponent,
-    CurrentUserComponent,
-    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +30,8 @@ import { LogoutComponent } from './logout/logout.component';
     ReactiveFormsModule,
     MaterialModule,
     WppRoutingModule,
+    UserModule,
+    MessagingModule,
   ],
   providers: [
     {
@@ -59,5 +50,4 @@ import { LogoutComponent } from './logout/logout.component';
   ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule {
-}
+export class AppModule {}

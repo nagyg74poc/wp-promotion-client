@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../classes/user';
-import { UserService } from '../services/user.service';
+import { User } from '../../../../../classes/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'wpp-user-list',
@@ -18,7 +18,7 @@ export class UserListComponent implements OnInit {
     this.getUsers();
   }
 
-  getUsers(){
+  getUsers() {
     this.userService.getUsers()
       .subscribe((data: User[]) => this.userList = data);
   }
