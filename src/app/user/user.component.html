@@ -7,12 +7,31 @@
       <input *ngIf="phase == 'edit'" type="hidden" [value]="id" readonly name="id">
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Name" formControlName="name" required name="name">
+        <mat-error *ngIf="userForm.get('name').hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Surname" formControlName="surname" required name="surname">
+        <mat-error *ngIf="userForm.get('surname').hasError('required')">
+          Surname is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input type="email" matInput placeholder="Email" [email]="true" formControlName="email" required name="email">
+        <input
+          required
+          email
+          matInput
+          type="email"
+          placeholder="Email"
+          formControlName="email"
+          name="email">
+        <mat-error *ngIf="userForm.get('email').hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="userForm.get('email').hasError('email')">
+          Invalid email format
+        </mat-error>
       </mat-form-field>
       <mat-form-field *ngIf="phase == 'new'" class="example-full-width">
         <input
@@ -24,6 +43,12 @@
           [type]="hidePassword ? 'password' : 'text'"
           name="password">
         <mat-icon matSuffix (click)="togglePassword()">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="userForm.get('password').hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="userForm.get('password').hasError('minlength')">
+          Passwords is not long enough
+        </mat-error>
       </mat-form-field>
       <mat-form-field *ngIf="phase == 'new'" class="example-full-width">
         <input
@@ -35,14 +60,22 @@
           [type]="hideCnfPassword ? 'password' : 'text'"
           name="confirmPassword">
         <mat-icon matSuffix (click)="toggleCnfPassword()">{{hideCnfPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="userForm.get('confirmPassword').hasError('required')">
+          Confirming password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="userForm.get('confirmPassword').hasError('pattern')">
+          Passwords doesn't match
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-select class="example-full-width" placeholder="Role" formControlName="role" required>
-          <mat-option>--</mat-option>
           <mat-option *ngFor="let role of roles" [value]="role.value">
             {{role.text}}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="userForm.get('role').hasError('required')">
+          Role is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
       <mat-slide-toggle
         required

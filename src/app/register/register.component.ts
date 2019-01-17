@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Roles } from '../classes/role';
+import { UserService } from '../services/user.service';
+import { MessagesService } from '../services/messages.service';
+import { fieldMatchValidator } from '../../utilities/fieldMatchValidator';
+import { FieldMatchErrorStateMatcher } from '../../utilities/fieldMatchErrorStateMatcher';
 
 @Component({
   selector: 'wpp-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: [ './register.component.scss' ]
 })
 export class RegisterComponent implements OnInit {
 
+  public userForm: FormGroup;
   public hidePassword: boolean;
   public hideConfirmPassword: boolean;
   public name: FormControl;
@@ -15,13 +21,30 @@ export class RegisterComponent implements OnInit {
   public password: FormControl;
   public confirmPassword: FormControl;
 
-  constructor() {
+  public roles = Object.keys(Roles)
+    .filter(key => !( key === Roles.Admin || key === Roles.Trainer ))
+    .map(key => ( { value: Roles[ key ], text: key } ));
+
+  public pwMatcher: FieldMatchErrorStateMatcher;
+
+  constructor(private fb: FormBuilder,
+              private userService: UserService,
+              private messageService: MessagesService) {
+
     this.hidePassword = true;
     this.hideConfirmPassword = true;
-    this.name = new FormControl('');
-    this.email = new FormControl('');
-    this.password = new FormControl('');
-    this.confirmPassword = new FormControl('');
+    this.userForm = this.fb.group({
+      name: '',
+      surname: '',
+      email: '',
+      password: '',
+      // confirmPassword: new FormControl('', [fieldMatchValidator('password', 'confirmPassword')]),
+      confirmPassword: '',
+      role: '',
+      active: false,
+    }, { validator: fieldMatchValidator('password', 'confirmPassword') });
+
+    this.pwMatcher = new FieldMatchErrorStateMatcher('password', 'confirmPassword');
   }
 
   ngOnInit() {
@@ -30,11 +53,16 @@ export class RegisterComponent implements OnInit {
   togglePassword() {
     this.hidePassword = !this.hidePassword;
   }
+
   toggleConfirmPassword() {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
   register() {
-    console.log(this);
+    const newUser = this.userForm.value;
+    delete newUser.confirmPassword;
+    // this.userService.register(newUser)
+    //   .subscribe(result => console.log('result New:', result));
   }
+
 }

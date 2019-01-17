@@ -44,13 +44,17 @@ export class UserService {
       .pipe(catchError(this.errorHandler));
   }
 
+  public register(user) {
+    return this.addUser(user);
+  }
+
   public login(user) {
-    return this.http.post(`${this.baseUrl}/users/login`, user, {observe: 'response'})
+    return this.http.post(`${this.baseUrl}/users/login`, user, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<User>) => {
-        localStorage.setItem('JWT', response.headers.get('X-AUTH-TOKEN'));
-        this._currentUser.next(new User().deserialize(response.body));
-      }),
+          localStorage.setItem('JWT', response.headers.get('X-AUTH-TOKEN'));
+          this._currentUser.next(new User().deserialize(response.body));
+        }),
         catchError(this.errorHandler));
   }
 

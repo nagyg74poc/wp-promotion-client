@@ -43,7 +43,7 @@ export class UserComponent implements OnInit {
         name: new FormControl({ value: '' }),
         surname: '',
         email: '',
-        role: Roles.Player,
+        role: '',
         active: false,
       });
       this.getUser(uid);
@@ -53,9 +53,8 @@ export class UserComponent implements OnInit {
         surname: '',
         email: '',
         password: '',
-        // confirmPassword: new FormControl('', [Validators.required, this.pwMatch(this.userForm.controls['password'].value)]),
         confirmPassword: '',
-        role: Roles.Player,
+        role: '',
         active: false,
       });
     }
