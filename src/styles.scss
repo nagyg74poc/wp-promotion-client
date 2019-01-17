@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import '~@angular/material/theming';
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.unselectable-input {
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.mat-snack-bar-container.error{
+  background-color: mat-color($mat-red, 500);
+  color: mat-color($mat-red, 50);
+  .mat-simple-snackbar-action{
+    color: white;
+  }
+}
+.mat-snack-bar-container.warn{
+  background-color: mat-color($mat-orange, 500);
+  color: mat-color($mat-orange, 50);
+  .mat-simple-snackbar-action{
+    color: white;
+  }
+}
+.mat-snack-bar-container.success{
+  background-color: mat-color($mat-green, 500);
+  color: mat-color($mat-green, 50);
+  .mat-simple-snackbar-action{
+    color: white;
+  }
+}
+.mat-snack-bar-container.info{
+  background-color: mat-color($mat-light-blue, 500);
+  color: mat-color($mat-light-blue, 50);
+  .mat-simple-snackbar-action{
+    color: white;
+  }
+}

@@ -1,0 +1,12 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+
+  mat-icon {
+    cursor: pointer;
+  }
+}
+
+.register-form > * {
+  width: 100%;
+}

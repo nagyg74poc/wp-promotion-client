@@ -1,0 +1,35 @@
+<button mat-button routerLink="/users/new" routerLinkActive="active">
+  <mat-icon>person</mat-icon>
+  <span>New</span>
+</button>
+<button mat-button routerLink="/users/edit/5c12e1dcd36bfd0d33bf923c" routerLinkActive="active">
+  <mat-icon>person</mat-icon>
+  <span>Edit</span>
+</button>
+<table mat-table>
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>surname</th>
+    <th>email</th>
+    <th>role</th>
+    <th>players_id</th>
+    <th>active</th>
+    <th>createdAt</th>
+    <th>modifiedAt</th>
+    <th>modifiedBy</th>
+  </tr>
+
+  <tr *ngFor="let user of userList">
+    <td><a routerLink="/users/edit/{{user.id}}">{{user.id}}</a></td>
+    <td>{{user.name}}</td>
+    <td>{{user.surname}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.role}}</td>
+    <td>{{user.players_id}}</td>
+    <td>{{user.active}}</td>
+    <td>{{user.createdAt}}</td>
+    <td>{{user.modifiedAt}}</td>
+    <td>{{user.modifiedBy}}</td>
+  </tr>
+</table>
