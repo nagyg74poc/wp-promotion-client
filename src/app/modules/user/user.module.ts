@@ -11,6 +11,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { CurrentUserComponent } from './components/current-user/current-user.component';
 import { WppRoutingModule } from '../../wpp-routing.module';
+import { RecaptchaModule } from 'angular-google-recaptcha';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,9 @@ import { WppRoutingModule } from '../../wpp-routing.module';
     ReactiveFormsModule,
     WppRoutingModule,
     MaterialModule,
+    RecaptchaModule.forRoot({
+      siteKey: '6LeToYoUAAAAAPi1H1opCj5VCVUl5mpRLmPzOYey',
+    }),
   ],
   exports: [
     CurrentUserComponent

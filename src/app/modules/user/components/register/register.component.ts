@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     .filter(key => !( key === Roles.Admin || key === Roles.Trainer ))
     .map(key => ( { value: Roles[ key ], text: key } ));
 
+  public recaptcha: FormControl;
   public pwMatcher: FieldMatchErrorStateMatcher;
 
   constructor(private fb: FormBuilder,
@@ -43,7 +44,7 @@ export class RegisterComponent implements OnInit {
       role: '',
       active: false,
     }, { validator: fieldMatchValidator('password', 'confirmPassword') });
-
+    this.recaptcha = new FormControl('');
     this.pwMatcher = new FieldMatchErrorStateMatcher('password', 'confirmPassword');
   }
 

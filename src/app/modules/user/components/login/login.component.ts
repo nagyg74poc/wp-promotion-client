@@ -1,23 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'wpp-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: [ './login.component.scss' ]
 })
 export class LoginComponent implements OnInit {
 
   public hidePassword: boolean;
-  public username: FormControl;
-  public password: FormControl;
+  public loginForm: FormGroup;
+  public recaptcha: FormControl;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService,
+              private router: Router,
+              private formBuilder: FormBuilder) {
     this.hidePassword = true;
-    this.username = new FormControl('');
-    this.password = new FormControl('');
+    this.loginForm = this.formBuilder.group({
+      username: '',
+      password: '',
+    });
+    this.recaptcha = new FormControl('');
   }
 
   ngOnInit() {
@@ -28,7 +33,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.userService.login({email: this.username.value, password: this.password.value})
+    const loginDto = this.loginForm.value;
+    this.userService.login({ email: loginDto.username, password: loginDto.password })
       .subscribe(result => {
         this.router.navigateByUrl('/users');
       });

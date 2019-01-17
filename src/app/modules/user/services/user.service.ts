@@ -53,7 +53,7 @@ export class UserService {
       .pipe(
         map((response: HttpResponse<User>) => {
           localStorage.setItem('JWT', response.headers.get('X-AUTH-TOKEN'));
-          this._currentUser.next(new User().deserialize(response.body));
+          this._currentUser.next(new User(response.body));
         }),
         catchError(this.errorHandler));
   }

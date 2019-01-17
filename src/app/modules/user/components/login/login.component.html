@@ -3,18 +3,41 @@
     <mat-card-title>Login</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form class="login-form">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Username" [formControl]="username">
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Password" [formControl]="password" [type]="hidePassword ? 'password' : 'text'">
-    <mat-icon matSuffix (click)="togglePassword()">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-  </mat-form-field>
-</form>
+    <form class="login-form" [formGroup]="loginForm">
+      <mat-form-field class="example-full-width">
+        <input
+          required
+          email
+          matInput
+          placeholder="Email"
+          formControlName="username">
+        <mat-error *ngIf="loginForm.get('username').hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('username').hasError('email')">
+          Invalid email format
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input
+          required
+          matInput
+          placeholder="Password"
+          formControlName="password"
+          [type]="hidePassword ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="togglePassword()">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="loginForm.get('password').hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <recaptcha
+        required
+        [formControl]="recaptcha"
+      ></recaptcha>
+    </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary" (click)="login()">Login</button>
+    <button mat-stroked-button color="primary" (click)="login()" [disabled]="recaptcha.invalid || loginForm.invalid">Login</button>
   </mat-card-actions>
   <mat-card-footer>
     <button mat-button routerLink="/register" routerLinkActive="active">

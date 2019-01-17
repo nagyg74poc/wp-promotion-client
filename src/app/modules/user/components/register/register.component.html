@@ -75,10 +75,14 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <recaptcha
+        required
+        [formControl]="recaptcha"
+      ></recaptcha>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary" (click)="register()" [disabled]="userForm.invalid">Register</button>
+    <button mat-stroked-button color="primary" (click)="register()" [disabled]="recaptcha.invalid || userForm.invalid">Register</button>
   </mat-card-actions>
   <mat-card-footer>
     <button mat-button routerLink="/login" routerLinkActive="active">

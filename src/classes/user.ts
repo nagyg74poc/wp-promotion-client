@@ -15,12 +15,7 @@ export class User implements Deserializable {
 
   constructor(user?: User) {
     if (user) {
-      this.id = user.id;
-      this.name = user.name;
-      this.surname = user.surname;
-      this.email = user.email;
-      this.role = user.role;
-      this.players_id = user.players_id;
+      Object.assign(this, user);
     } else {
       this.id = '';
       this.name = '';
