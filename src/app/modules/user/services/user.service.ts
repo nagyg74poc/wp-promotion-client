@@ -6,23 +6,41 @@ import { catchError, map } from 'rxjs/operators';
 import { MessagingService } from '../../messaging/services/messaging.service';
 import { Message } from '../../../../classes/message';
 import { errorClasses } from '../../../../classes/error-classes';
+import { AuthService } from '../../../services/auth.service';
+import { CurrentUserProvider } from './currentUser.provider';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private _currentUser: Subject<User | null>;
+  // private _currentUser: Subject<User | null>;
   baseUrl: string;
 
-  constructor(private http: HttpClient, private messagingService: MessagingService) {
-    this._currentUser = new Subject();
+  constructor(private http: HttpClient,
+              private messagingService: MessagingService,
+              private currentUser: CurrentUserProvider,
+              private authService: AuthService) {
+    // this._currentUser = new Subject();
     this.baseUrl = 'http://localhost:3000/api';
   }
 
-  get currentUser(): Observable<User> {
-    return this._currentUser;
-  }
+  // get currentUser(): Observable<User> {
+  //   return this._currentUser;
+  // }
+
+  // public getCurrentUser() {
+  //   return this.http.post<User>(`${this.baseUrl}/users/current`, null)
+  //     .pipe(
+  //       map((user: User | null) => {
+  //         if (user) {
+  //           // this._currentUser.next(new User(user));
+  //         }
+  //         return user;
+  //       }),
+  //       catchError(this.errorHandler)
+  //     );
+  // }
 
   public getUsers() {
     return this.http.get<User[]>(`${this.baseUrl}/users`)
@@ -52,8 +70,9 @@ export class UserService {
     return this.http.post(`${this.baseUrl}/users/login`, user, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<User>) => {
-          localStorage.setItem('JWT', response.headers.get('X-AUTH-TOKEN'));
-          this._currentUser.next(new User(response.body));
+          this.authService.authorize(response.headers.get('X-AUTH-TOKEN'));
+          this.currentUser.setUser(response.body);
+          // this._currentUser.next(new User(response.body));
         }),
         catchError(this.errorHandler));
   }
@@ -62,8 +81,9 @@ export class UserService {
     return this.http.post(`${this.baseUrl}/users/logout`, {})
       .pipe(
         map(() => {
-          localStorage.removeItem('JWT');
-          this._currentUser.next();
+          this.authService.unauthorize();
+          this.currentUser.unsetUser();
+          // this._currentUser.next();
         }),
         catchError(this.errorHandler));
   }
@@ -85,5 +105,5 @@ export class UserService {
     // return an observable with a user-facing error message
     this.messagingService.sendMessage(errMessage);
     return throwError(error.error);
-  };
+  }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserComponent } from './components/user/user.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,6 +12,8 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { CurrentUserComponent } from './components/current-user/current-user.component';
 import { WppRoutingModule } from '../../wpp-routing.module';
 import { RecaptchaModule } from 'angular-google-recaptcha';
+import { CurrentUserProvider } from './services/currentUser.provider';
+import { currentUserProviderFactory } from './services/currentUserProvider.factory';
 
 @NgModule({
   declarations: [
@@ -39,4 +41,5 @@ import { RecaptchaModule } from 'angular-google-recaptcha';
     UserService,
   ],
 })
-export class UserModule { }
+export class UserModule {
+}

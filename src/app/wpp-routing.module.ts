@@ -7,15 +7,25 @@ import { RegisterComponent } from './modules/user/components/register/register.c
 import { UserListComponent } from './modules/user/components/user-list/user-list.component';
 import { UserComponent } from './modules/user/components/user/user.component';
 import { LogoutComponent } from './modules/user/components/logout/logout.component';
+import { RoleGuard } from './services/roles-guard.service';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'app', component: MainComponent, data: { title: 'Heroes List' } },
-  { path: 'users', component: UserListComponent },
-  { path: 'users/new', component: UserComponent, data: { phase: 'new' } },
-  { path: 'users/edit/:uid', component: UserComponent, data: { phase: 'edit' } },
+  {
+    path: 'app', component: MainComponent, data: { title: 'Heroes List' },
+    children: [
+      {
+        path: 'users',
+        component: UserListComponent,
+        canActivate: [ RoleGuard ],
+        data: { forRole: 'Admin' },
+      },
+      { path: 'users/new', component: UserComponent, data: { phase: 'new' } },
+      { path: 'users/edit/:uid', component: UserComponent, data: { phase: 'edit' } },
+    ]
+  },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];

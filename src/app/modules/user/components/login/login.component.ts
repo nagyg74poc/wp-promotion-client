@@ -12,7 +12,8 @@ export class LoginComponent implements OnInit {
 
   public hidePassword: boolean;
   public loginForm: FormGroup;
-  public recaptcha: FormControl;
+  // public recaptcha: FormControl;
+  public recaptcha: {};
 
   constructor(private userService: UserService,
               private router: Router,
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
       username: '',
       password: '',
     });
-    this.recaptcha = new FormControl('');
+    // this.recaptcha = new FormControl('');
+    this.recaptcha = {valid: true};
   }
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
     const loginDto = this.loginForm.value;
     this.userService.login({ email: loginDto.username, password: loginDto.password })
       .subscribe(result => {
-        this.router.navigateByUrl('/users');
+        this.router.navigateByUrl('/app/users');
       });
   }
 

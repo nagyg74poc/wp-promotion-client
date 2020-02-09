@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,8 @@ import { UserService } from './modules/user/services/user.service';
 import { HeaderInterceptor } from './services/http-interceptor.service';
 import { UserModule } from './modules/user/user.module';
 import { MessagingModule } from './modules/messaging/messaging.module';
+import { CurrentUserProvider } from './modules/user/services/currentUser.provider';
+import { currentUserProviderFactory } from './modules/user/services/currentUserProvider.factory';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,12 @@ import { MessagingModule } from './modules/messaging/messaging.module';
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptor,
       multi: true // Add this line when using multiple interceptors.
+    },
+    CurrentUserProvider,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: currentUserProviderFactory,
+      deps: [ CurrentUserProvider ], multi: true
     },
     UserService,
   ],

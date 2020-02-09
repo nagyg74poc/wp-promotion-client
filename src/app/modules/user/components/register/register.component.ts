@@ -62,8 +62,8 @@ export class RegisterComponent implements OnInit {
   register() {
     const newUser = this.userForm.value;
     delete newUser.confirmPassword;
-    // this.userService.register(newUser)
-    //   .subscribe(result => console.log('result New:', result));
+    this.userService.register(newUser)
+      .subscribe(result => console.log('result New:', result));
   }
 
 }
